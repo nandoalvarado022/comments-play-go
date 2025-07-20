@@ -1,24 +1,20 @@
 package main
 
 import (
-    "log"
-    "net/http"
+	"log"
+	"net/http"
 
-    "github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5"
+	"github.com/nandoalvarado022/comments-play/internal/routes/reader"
+	"github.com/nandoalvarado022/comments-play/internal/routes/writer"
 )
 
 func main() {
-    r := chi.NewRouter()
+	r := chi.NewRouter()
 
-    // Aquí montarás tus rutas reales
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-        w.Write([]byte("OK"))
-    })
+	reader.RegisterReaderRoutes(r)
+	writer.RegisterWriterRoutes(r)
 
-    r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
-        w.Write([]byte("OK"))
-    })
-
-    log.Println("Starting Comments Play on :3000")
-    http.ListenAndServe(":3000", r)
+	log.Println("Starting Comments Play on :3000")
+	http.ListenAndServe(":3000", r)
 }
